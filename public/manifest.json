@@ -28,8 +28,8 @@
     }],
   "start_url": "/share.html",
   "display": "standalone",
-  "background_color": "#3E4EB8",
-  "theme_color": "#2F3BA2",
+  "background_color": "#fafafa",
+  "theme_color": "#B31B1B",
   "share_target": {
     "action": "/share.html",
     "params": {
