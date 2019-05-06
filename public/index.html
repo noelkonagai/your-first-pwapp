@@ -28,22 +28,28 @@
   <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
 
   <!-- CODELAB: Add link rel manifest -->
+  <!-- CODELAB: Add link rel manifest -->
+  <link rel="manifest" href="/manifest.json">
   <!-- CODELAB: Add iOS meta tags and icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="First PWA">
+  <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
   <!-- CODELAB: Add description here -->
+  <meta name="description" content="A sample PWA app">
   <!-- CODELAB: Add meta theme-color -->
+  <meta name="theme-color" content="#2F3BA2" />
 
 </head>
 <body>
 
   <header class="header">
     <h1>
-      Weather PWA
-      <a href="https://darksky.net/poweredby/" class="powered-by">
-        Powered by Dark Sky
-      </a>
+      First PWA
     </h1>
     <button id="butInstall" aria-label="Install" hidden></button>
     <button id="butRefresh" aria-label="Refresh"></button>
+<!--     <button id="butShare" aria-label="Share">Share</button> -->
   </header>
 
   <main class="main">
@@ -53,8 +59,23 @@
     </button>
 
     <div id="about" class="weather-card">
-      <b>Your First Progressive Web App Codelab</b><br>
-      Get started at <a href="https://g.co/codelabs/pwa">https://g.co/codelabs/pwa</a>.
+      <h3>
+        Web Share Target Handler
+      </h3>
+      
+      <p>
+        <b>href:</b> <code><span id="href"></span></code>
+      </p>
+      
+      <p>
+        <b>Query String Parameters:</b><br>
+        <b>title:</b> <code><span id="title"></span></code><br>
+        <b>text:</b> <code><span id="text"></span></code><br>
+        <b>url:</b> <code><span id="url"></span></code>
+      </p> 
+      <p>Upload
+         <a href = "https://first-pwa.glitch.me/upload.html">Upload</a>
+      </p>
     </div>
 
     <div id="weather-template" class="weather-card" hidden>
@@ -92,7 +113,7 @@
             <span class="value"></span>
           </div>
           <div class="sunset">
-              <span class="label">Sunset:</span>
+              <span class="label">Sunrise:</span>
               <span class="value"></span>
             </div>
         </div>
@@ -201,9 +222,28 @@
 
   <script src="/scripts/luxon-1.11.4.js"></script>
   <script src="/scripts/app.js"></script>
-  <!-- CODELAB: Add the install script here -->
+  <script src="/scripts/install.js"></script>
   <script>
     // CODELAB: Register service worker.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((reg) => {
+              console.log('Service worker registered.', reg);
+            });
+      });
+    }
+  </script>
+  
+  <script>
+    // This is to receive share targets
+    window.addEventListener('DOMContentLoaded', () => {
+    const parsedUrl = new URL(window.location);
+    // searchParams.get() will properly handle decoding the values.
+    console.log('Title shared: ' + parsedUrl.searchParams.get('title'));
+    console.log('Text shared: ' + parsedUrl.searchParams.get('text'));
+    console.log('URL shared: ' + parsedUrl.searchParams.get('url'));
+    });
   </script>
 
 </body>
