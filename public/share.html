@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Web Share Target Handler</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/styles/inline.css">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Weather PWA">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <meta name="description" content="A sample weather app">
+    <meta name="theme-color" content="#2F3BA2" />
+    <script>
+      //RESIZING THE VIDEO
+      function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+      }
+    </script>
+    <script src="/scripts/upload.js"></script>
+    
+  <header class="header">
+    <h1>
+      Demo
+    </h1>
+    <button id="butInstall" aria-label="Install" hidden></button>
+    <button id="butRefresh" aria-label="Refresh"></button>
+    <button id="butShare" aria-label="Share">Upload</button>
+    </header>
+    
+  </head>  
+  
+  <body>
+    <main class="main">
+      
+      <div class="weather-card">
+        <h2>Web Share Target Handler</h2>
+          <p>
+            <b>href:</b> <code><span id="href"></span></code>
+          </p>
+        
+          <p>
+            <h3>Query String Parameters:</h3><br>
+            <b>Title:</b> <code><span id="title"></span></code><br>
+            <b>Text:</b> <code><span id="text"></span></code><br>
+            <b>Url:</b> <code><span id="url"></span></code>
+          </p>  
+      </div>
+      
+      <div class="weather-card">
+        <h2>
+          Test Upload
+        </h2>
+          <button class="file-submit" id = "upload">Test Upload</button>
+          <input type="file" id="files" name="files[]" multiple  class="file-select"/>
+          <output id="list"></output>
+      </div>
+  
+      
+      <div class="weather-card videoWrapper">
+        <h2>Example Youtube Video</h2>
+        <iframe
+                src = "https://www.youtube.com/embed/nsPQvZm_rgM"
+                frameborder= "0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                id = "youtube">
+        </iframe>
+      </div>
+      
+      <div class="weather-card">
+        <h2>
+          Example Google Document
+        </h2>
+         <iframe src="https://docs.google.com/document/d/e/2PACX-1vRuCKheutQvJx-albTqR8vmrKZ0B1YolKzUqU0lMsXxQRNxEUbXHy9omlUKXpFy2r17lhmOwKFvejGz/pub?embedded=true"></iframe>
+      </div>
+      
+<!--       <div class="weather-card">
+        <h2>
+          Example PDF
+        </h2>
+        <object data="hhttps://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf" type="application/pdf">
+          <embed src="https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf" type="application/pdf" />
+        </object>
+      </div> -->
+    </main>
+    
+    <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase-storage.js"></script>
+    <script src="scripts/firebase-init.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
+    
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('href').textContent = window.location.href;
+        const parsedUrl = new URL(window.location);
+        // const youtube_url = "https://www.youtube.com/embed/"
+        // Using Regex to get video_ID
+        // var video_ID = /[^/]*$/.exec(arsedUrl.searchParams.get('text'))[0];
+        // var youtubeElement = document.getElementById('youtube')'
+        document.getElementById('title').textContent = parsedUrl.searchParams.get('title');
+        document.getElementById('text').textContent = parsedUrl.searchParams.get('text');
+        document.getElementById('url').textContent = parsedUrl.searchParams.get('url');
+        // youtubeElement.setAttribute('src', youtube_url + video_ID);
+      });
+    </script>
+    <script src="/scripts/install.js"></script>
+    <script src="/scripts/luxon-1.11.4.js"></script>
+  <script src="/scripts/app.js"></script>
+    
+  </body>
+</html>

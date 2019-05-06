@@ -163,6 +163,26 @@ function getForecastFromNetwork(coords) {
  */
 function getForecastFromCache(coords) {
   // CODELAB: Add code to get weather forecast from the caches object.
+  getForecastFromCache(location.geo)
+    .then((forecast) => {
+      renderForecast(card, forecast);
+    });
+
+if (!('caches' in window)) {
+  return null;
+}
+const url = `${window.location.origin}/forecast/${coords}`;
+return caches.match(url)
+    .then((response) => {
+      if (response) {
+        return response.json();
+      }
+      return null;
+    })
+    .catch((err) => {
+      console.error('Error getting data from cache', err);
+      return null;
+    });
 
 }
 
@@ -258,3 +278,33 @@ function init() {
 }
 
 init();
+
+if ('share' in navigator) {
+  console.log('👍', 'navigator.share is supported');
+  butShare.removeAttribute('disabled');
+  butShare.addEventListener('click', (e) => {
+    console.log('👍', 'butShare-clicked', e);
+    e.preventDefault();
+    const shareOpts = {
+      title: 'Jabberwocky',
+      text: 'Check out this great poem about a Jabberwocky.',
+      url: 'https://en.wikipedia.org/wiki/Jabberwocky',
+    };
+    navigator.share(shareOpts)
+        .then((e) => {
+          const msg = 'navigator.share succeeded.';
+          divResult.textContent = msg;
+          console.log('👍', msg, e);
+        })
+        .catch((err) => {
+          const msg = 'navigator.share failed';
+          divResult.textContent = `${msg}\n${JSON.stringify(err)}`;
+          console.error('👎', msg, err);
+        });
+  });
+} else  {
+  console.warn('👎', 'navigator.share is not supported');
+  const divNotSup = document.getElementById('shareNotSupported');
+  divNotSup.classList.toggle('hidden', false);
+  // divResult.classList.toggle('hidden', true);
+}
